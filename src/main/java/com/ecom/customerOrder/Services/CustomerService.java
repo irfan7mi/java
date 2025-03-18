@@ -1,34 +1,37 @@
-package com.ecom.customerOrder.Services;
+package com.ecom.customerOrder.Services;  // Correct package name for services
 
-
-
-import com.ecom.customerorder.exception.ResourceNotFoundException;
-import com.ecom.customerorder.model.Customer;
-import com.ecom.customerorder.repository.CustomerRepository;
+import com.ecom.customerOrder.exception.ResourceNotFoundException;  // Corrected import for ResourceNotFoundException
+import com.ecom.customerOrder.Model.Order;  // Correct import for Order class (case-sensitive)
+import com.ecom.customerOrder.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class CustomerService {
-    @Autowired
-    private CustomerRepository repository;
+public class OrderService {
 
-    public List<Customer> getAllCustomers() {
+    @Autowired
+    private OrderRepository repository;
+
+    // Get all orders
+    public List<Order> getAllOrders() {
         return repository.findAll();
     }
 
-    public Customer getCustomerById(Long id) {
+    // Get order by ID
+    public Order getOrderById(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found with id: " + id));  // Provide detailed error message
     }
 
-    public Customer addCustomer(Customer customer) {
-        return repository.save(customer);
+    // Add new order
+    public Order addOrder(Order order) {
+        return repository.save(order);
     }
 
-    public void deleteCustomer(Long id) {
+    // Delete order by ID
+    public void deleteOrder(Long id) {
         repository.deleteById(id);
     }
 }
